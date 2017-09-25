@@ -10,7 +10,6 @@ import lombok.Data;
 import lombok.extern.java.Log;
 import za.co.mmagon.jwebswing.base.ajax.AjaxResponse;
 import za.co.mmagon.jwebswing.base.html.Input;
-import za.co.mmagon.jwebswing.base.html.Paragraph;
 import za.co.mmagon.jwebswing.htmlbuilder.javascript.JavaScriptPart;
 import za.co.mmagon.jwebswing.plugins.bootstrap.dropdown.BSDropDown;
 import za.co.mmagon.jwebswing.plugins.bootstrap.forms.BSForm;
@@ -94,7 +93,7 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 			BSFormGroup group = new BSFormGroup();
 			
 			
-			if (field.isAnnotationPresent(LabelField.class) && field.getType().equals(String.class))
+			if (field.isAnnotationPresent(LabelField.class))
 			{
 				LabelField lf = field.getDeclaredAnnotation(LabelField.class);
 				BSFormLabel chb = buildFieldLabel(field, lf, group);
@@ -146,11 +145,21 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 				Input chb = buildEmailField(field, lf, group);
 				group.setInputComponent(chb);
 			}
-			else if (field.isAnnotationPresent(HiddenField.class) && field.getType().equals(String.class))
+			else if (field.isAnnotationPresent(HiddenField.class))
 			{
 				HiddenField lf = field.getDeclaredAnnotation(HiddenField.class);
 				/*Input chb = buildHiddenField(field,lf, group);
 				group.setInputComponent(chb);*/
+			}
+			else if (field.isAnnotationPresent(NumberField.class)
+					&& ((Long.class.isAssignableFrom(field.getType()) ||
+					Integer.class.isAssignableFrom(field.getType()) ||
+					BigDecimal.class.isAssignableFrom(field.getType()))
+			))
+			{
+				NumberField lf = field.getDeclaredAnnotation(NumberField.class);
+				Input input = buildNumberField(field, lf, group);
+				group.setInputComponent(input);
 			}
 			else if (field.isAnnotationPresent(NumberSpinnerField.class)
 					&& ((Long.class.isAssignableFrom(field.getType()) ||
@@ -252,11 +261,11 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 		}
 		if (!anno.requiredMessage().isEmpty())
 		{
-			group.setRequiredMessage(new Paragraph(anno.requiredMessage()));
+			group.setRequiredMessage(anno.requiredMessage());
 		}
 		if (!anno.patternMessage().isEmpty())
 		{
-			group.setPatternMessage(new Paragraph(anno.patternMessage()));
+			group.setPatternMessage(anno.patternMessage());
 		}
 
 		if (field.isAnnotationPresent(ReadOnlyWebComponent.class))
@@ -312,11 +321,11 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 		}
 		if (!anno.requiredMessage().isEmpty())
 		{
-			group.setRequiredMessage(new Paragraph(anno.requiredMessage()));
+			group.setRequiredMessage(anno.requiredMessage());
 		}
 		if (!anno.patternMessage().isEmpty())
 		{
-			group.setPatternMessage(new Paragraph(anno.patternMessage()));
+			group.setPatternMessage(anno.patternMessage());
 		}
 		
 		
@@ -359,17 +368,16 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 		if (!(anno.minLength() == Integer.MIN_VALUE))
 		{
 			input.setMinimumLength(anno.minLength());
-			group.setMinLengthMessage(new Paragraph("Needs a few more characters"));
+			group.setMinLengthMessage(anno.minLengthMessage());
 		}
 		if (!(anno.maxLength() == Integer.MIN_VALUE))
 		{
 			input.setMaximumLength(anno.maxLength());
-			group.setMaxLengthMessage(new Paragraph("No more than this"));
+			group.setMinLengthMessage(anno.maxLengthMessage());
 		}
 		input.setPlaceholder("Password");
 		
 		group.setInputComponent(input);
-		group.setMinLengthMessage(new Paragraph("Needs at least 4 characters"));
 		group.setAngularValidation(true);
 		group.setShowControlFeedback(true);
 		
@@ -379,11 +387,11 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 		}
 		if (!anno.requiredMessage().isEmpty())
 		{
-			group.setRequiredMessage(new Paragraph(anno.requiredMessage()));
+			group.setRequiredMessage(anno.requiredMessage());
 		}
 		if (!anno.patternMessage().isEmpty())
 		{
-			group.setPatternMessage(new Paragraph(anno.patternMessage()));
+			group.setPatternMessage(anno.patternMessage());
 		}
 		
 		setValue(field, input);
@@ -453,7 +461,7 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 		if (anno.required())
 		{
 			input.setRequired();
-			group.setRequiredMessage(new Paragraph(anno.requiredMessage()));
+			group.setRequiredMessage(anno.requiredMessage());
 		}
 		if (!anno.onText().isEmpty())
 		{
@@ -465,11 +473,11 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 		}
 		if (!anno.requiredMessage().isEmpty())
 		{
-			group.setRequiredMessage(new Paragraph(anno.requiredMessage()));
+			group.setRequiredMessage(anno.requiredMessage());
 		}
 		if (!anno.patternMessage().isEmpty())
 		{
-			group.setPatternMessage(new Paragraph(anno.patternMessage()));
+			group.setPatternMessage(anno.patternMessage());
 		}
 		
 		group.setAngularValidation(true);
@@ -508,13 +516,13 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 		if (!(anno.minLength() == Integer.MIN_VALUE))
 		{
 			input.setMinimumLength(anno.minLength());
-			group.setMinLengthMessage(new Paragraph(anno.minLengthMessage()));
+			group.setMinLengthMessage(anno.minLengthMessage());
 		}
 		
 		if (!(anno.maxLength() == Integer.MIN_VALUE))
 		{
 			input.setMaximumLength(anno.maxLength());
-			group.setMaxLengthMessage(new Paragraph(anno.maxLengthMessage()));
+			group.setMaxLengthMessage(anno.maxLengthMessage());
 		}
 		
 		if (anno.required())
@@ -536,11 +544,11 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 		}
 		if (!anno.requiredMessage().isEmpty())
 		{
-			group.setRequiredMessage(new Paragraph(anno.requiredMessage()));
+			group.setRequiredMessage(anno.requiredMessage());
 		}
 		if (!anno.patternMessage().isEmpty())
 		{
-			group.setPatternMessage(new Paragraph(anno.patternMessage()));
+			group.setPatternMessage(anno.patternMessage());
 		}
 		
 		if (field.isAnnotationPresent(ReadOnlyWebComponent.class))
@@ -548,6 +556,49 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 			input.addAttribute("readonly", null);
 			input.addAttribute("disabled", "");
 		}
+		
+		return input;
+	}
+	
+	public BSFormNumberInput buildNumberField(Field field, NumberField anno, BSFormGroup group)
+	{
+		BSFormNumberInput input = new BSFormNumberInput();
+		input.bind(getID() + "." + field.getName());
+		
+		if (anno.maximumValue() != Integer.MIN_VALUE)
+		{
+			input.setMaximumLength(anno.maximumValue());
+		}
+		if (anno.minimumValue() != Integer.MIN_VALUE)
+		{
+			input.setMinimumLength(anno.minimumValue());
+		}
+		
+		group.setInputComponent(input);
+		group.setAngularValidation(true);
+		group.setShowControlFeedback(anno.showControlFeedback());
+		
+		if (anno.required())
+		{
+			input.setRequired();
+		}
+		
+		if (!anno.requiredMessage().isEmpty())
+		{
+			group.setRequiredMessage(anno.requiredMessage());
+		}
+		if (!anno.patternMessage().isEmpty())
+		{
+			group.setPatternMessage(anno.patternMessage());
+		}
+		
+		setValue(field, input);
+		if (field.isAnnotationPresent(ReadOnlyWebComponent.class))
+		{
+			input.addAttribute("readonly", null);
+			input.addAttribute("disabled", "");
+		}
+		
 		
 		return input;
 	}
@@ -571,13 +622,17 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 			input.setRequired();
 		}
 		
+		group.setInputComponent(input);
+		group.setAngularValidation(true);
+		group.setShowControlFeedback(anno.showControlFeedback());
+		
 		if (!anno.requiredMessage().isEmpty())
 		{
-			group.setRequiredMessage(new Paragraph(anno.requiredMessage()));
+			group.setRequiredMessage(anno.requiredMessage());
 		}
 		if (!anno.patternMessage().isEmpty())
 		{
-			group.setPatternMessage(new Paragraph(anno.patternMessage()));
+			group.setPatternMessage(anno.patternMessage());
 		}
 		
 		setValue(field, input);
