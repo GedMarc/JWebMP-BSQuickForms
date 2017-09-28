@@ -1,7 +1,7 @@
 package com.armineasy.jwebswing.plugins.quickforms;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import za.co.mmagon.BaseTestClass;
 import za.co.mmagon.jwebswing.htmlbuilder.javascript.JavaScriptPart;
 
@@ -9,7 +9,7 @@ public class BSQuickFormTest extends BaseTestClass
 {
 	private BSQuickForm form;
 	
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		form = new BSQuickForm(new Dto());
@@ -54,6 +54,12 @@ public class BSQuickFormTest extends BaseTestClass
 	@Test
 	public void buildFileUploadField() throws Exception
 	{
+	}
+	
+	@Test
+	public void buildPrettyCheckbox() throws Exception
+	{
+	
 	}
 	
 	@Test

@@ -6,11 +6,13 @@
 package com.armineasy.jwebswing.plugins.quickforms;
 
 import com.armineasy.injection.GuiceContext;
+import com.armineasy.jwebswing.plugins.quickforms.annotations.actions.PrettyCheckboxField;
 import lombok.Data;
 import lombok.extern.java.Log;
 import za.co.mmagon.jwebswing.base.ajax.AjaxResponse;
 import za.co.mmagon.jwebswing.base.html.Input;
 import za.co.mmagon.jwebswing.htmlbuilder.javascript.JavaScriptPart;
+import za.co.mmagon.jwebswing.plugins.angularprettycheckboxes.PrettyCheckbox;
 import za.co.mmagon.jwebswing.plugins.bootstrap.dropdown.BSDropDown;
 import za.co.mmagon.jwebswing.plugins.bootstrap.forms.BSForm;
 import za.co.mmagon.jwebswing.plugins.bootstrap.forms.BSFormLabel;
@@ -20,6 +22,7 @@ import za.co.mmagon.jwebswing.plugins.bootstrap.forms.groups.sets.BSComponentInp
 import za.co.mmagon.jwebswing.plugins.bootstrap.forms.groups.sets.BSFormCheckInput;
 import za.co.mmagon.jwebswing.plugins.bootstrapswitch.BootstrapSwitchCheckBox;
 import za.co.mmagon.jwebswing.plugins.quickforms.annotations.*;
+import za.co.mmagon.jwebswing.plugins.quickforms.annotations.states.ReadOnlyWebComponent;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -91,58 +94,57 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 		for (Field field : myFields)
 		{
 			BSFormGroup group = new BSFormGroup();
-			
+			Input chb = null;
 			
 			if (field.isAnnotationPresent(LabelField.class))
 			{
 				LabelField lf = field.getDeclaredAnnotation(LabelField.class);
-				BSFormLabel chb = buildFieldLabel(field, lf, group);
-				chb.setID(getObject().getClass().getSimpleName() + "_" + field.getName() + "_lbl");
-				group.setLabel(chb);
+				BSFormLabel label = buildFieldLabel(field, lf, group);
+				label.setID(getObject().getClass().getSimpleName() + "_" + field.getName() + "_lbl");
+				group.setLabel(label);
 			}
 			
 			if (field.isAnnotationPresent(HeaderField.class) && field.getType().isAssignableFrom(String.class))
 			{
 				HeaderField lf = field.getDeclaredAnnotation(HeaderField.class);
-				BSFormLabel chb = buildHeaderField(field, lf, group);
-				group.add(chb);
+				BSFormLabel label = buildHeaderField(field, lf, group);
+				group.add(label);
 			}
 			
 			if (field.isAnnotationPresent(SubHeaderField.class) && field.getType().equals(String.class))
 			{
 				SubHeaderField lf = field.getDeclaredAnnotation(SubHeaderField.class);
-				BSFormLabel chb = buildSubHeaderField(field, lf, group);
-				group.add(chb);
+				BSFormLabel label = buildSubHeaderField(field, lf, group);
+				group.add(label);
 			}
-			
-			if (field.isAnnotationPresent(DateTimePicker.class) && field.getType().equals(LocalDateTime.class))
+			if (field.isAnnotationPresent(DateTimePickerField.class) && field.getType().equals(LocalDateTime.class))
 			{
-				DateTimePicker lf = field.getDeclaredAnnotation(DateTimePicker.class);
-				Input chb = buildDateTimePicker(field, lf, group);
+				DateTimePickerField lf = field.getDeclaredAnnotation(DateTimePickerField.class);
+				chb = buildDateTimePicker(field, lf, group);
 				group.setInputComponent(chb);
 			}
-			else if (field.isAnnotationPresent(DateTimePicker.class) && field.getType().equals(Date.class))
+			else if (field.isAnnotationPresent(DateTimePickerField.class) && field.getType().equals(Date.class))
 			{
-				DateTimePicker lf = field.getDeclaredAnnotation(DateTimePicker.class);
-				Input chb = buildDateTimePicker(field, lf, group);
+				DateTimePickerField lf = field.getDeclaredAnnotation(DateTimePickerField.class);
+				chb = buildDateTimePicker(field, lf, group);
 				group.setInputComponent(chb);
 			}
-			else if (field.isAnnotationPresent(DatePicker.class) && field.getType().equals(LocalDate.class))
+			else if (field.isAnnotationPresent(DatePickerField.class) && field.getType().equals(LocalDate.class))
 			{
-				DatePicker lf = field.getDeclaredAnnotation(DatePicker.class);
-				Input chb = buildDatePicker(field, lf, group);
+				DatePickerField lf = field.getDeclaredAnnotation(DatePickerField.class);
+				chb = buildDatePicker(field, lf, group);
 				group.setInputComponent(chb);
 			}
-			else if (field.isAnnotationPresent(DatePicker.class) && field.getType().equals(Date.class))
+			else if (field.isAnnotationPresent(DatePickerField.class) && field.getType().equals(Date.class))
 			{
-				DatePicker lf = field.getDeclaredAnnotation(DatePicker.class);
-				Input chb = buildDatePicker(field, lf, group);
+				DatePickerField lf = field.getDeclaredAnnotation(DatePickerField.class);
+				chb = buildDatePicker(field, lf, group);
 				group.setInputComponent(chb);
 			}
 			else if (field.isAnnotationPresent(EmailField.class) && field.getType().equals(String.class))
 			{
 				EmailField lf = field.getDeclaredAnnotation(EmailField.class);
-				Input chb = buildEmailField(field, lf, group);
+				chb = buildEmailField(field, lf, group);
 				group.setInputComponent(chb);
 			}
 			else if (field.isAnnotationPresent(HiddenField.class))
@@ -158,8 +160,8 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 			))
 			{
 				NumberField lf = field.getDeclaredAnnotation(NumberField.class);
-				Input input = buildNumberField(field, lf, group);
-				group.setInputComponent(input);
+				chb = buildNumberField(field, lf, group);
+				group.setInputComponent(chb);
 			}
 			else if (field.isAnnotationPresent(NumberSpinnerField.class)
 					&& ((Long.class.isAssignableFrom(field.getType()) ||
@@ -169,46 +171,57 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 			{
 				NumberSpinnerField lf = field.getDeclaredAnnotation(NumberSpinnerField.class);
 				group.addClass(BSComponentInputGroupOptions.Input_Group);
-				Input input = buildNumberSpinnerField(field, lf, group);
-				group.setInputComponent(input);
+				chb = buildNumberSpinnerField(field, lf, group);
+				group.setInputComponent(chb);
 			}
 			else if (field.isAnnotationPresent(PasswordField.class) && field.getType().equals(String.class))
 			{
 				PasswordField lf = field.getDeclaredAnnotation(PasswordField.class);
-				Input chb = buildPasswordField(field, lf, group);
+				chb = buildPasswordField(field, lf, group);
 				group.setInputComponent(chb);
 			}
 			else if (field.isAnnotationPresent(TextField.class))
 			{
 				TextField lf = field.getDeclaredAnnotation(TextField.class);
-				Input chb = buildTextField(field, lf, group);
+				chb = buildTextField(field, lf, group);
 				group.setInputComponent(chb);
 			}
 			else if (field.isAnnotationPresent(TextAreaField.class) && field.getType().equals(String.class))
 			{
 				TextAreaField lf = field.getDeclaredAnnotation(TextAreaField.class);
-				Input chb = buildTextAreaField(field, lf, group);
+				chb = buildTextAreaField(field, lf, group);
+				group.setInputComponent(chb);
+			}
+			else if (field.isAnnotationPresent(PrettyCheckboxField.class) && field.getType().equals(Boolean.class))
+			{
+				PrettyCheckboxField lf = field.getDeclaredAnnotation(PrettyCheckboxField.class);
+				chb = buildPrettyCheckbox(field, lf, group);
 				group.setInputComponent(chb);
 			}
 			else if (field.isAnnotationPresent(TelephoneField.class) && field.getType().equals(String.class))
 			{
 				TelephoneField lf = field.getDeclaredAnnotation(TelephoneField.class);
-				Input chb = buildTelephoneField(field, lf, group);
+				chb = buildTelephoneField(field, lf, group);
 				group.setInputComponent(chb);
 			}
 			else if (field.isAnnotationPresent(SwitchField.class))
 			{
 				SwitchField lf = field.getDeclaredAnnotation(SwitchField.class);
-				Input chb = buildSwitchField(field, lf, group);
+				chb = buildSwitchField(field, lf, group);
 				group.setInputComponent(chb);
 			}
 			
-			if (group.getInputComponent() != null || !group.getChildren().isEmpty())
+			if (chb != null || !group.getChildren().isEmpty())
 			{
-				if (group.getInputComponent() != null)
+				if (chb != null)
 				{
-					group.getInputComponent().setID(getObject().getClass().getSimpleName() + "_" + field.getName());
-					//group.add(group.getInputComponent());
+					chb.setID(getObject().getClass().getSimpleName() + "_" + field.getName());
+					
+					if (field.isAnnotationPresent(ReadOnlyWebComponent.class))
+					{
+						chb.addAttribute("readonly", "");
+						chb.addAttribute("disabled", "");
+					}
 				}
 				add(group);
 			}
@@ -267,12 +280,6 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 		{
 			group.setPatternMessage(anno.patternMessage());
 		}
-
-		if (field.isAnnotationPresent(ReadOnlyWebComponent.class))
-		{
-			input.addAttribute("readonly", "");
-			input.addAttribute("disabled", "");
-		}
 		
 		if (!anno.style().isEmpty())
 		{
@@ -290,12 +297,12 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 		return input;
 	}
 	
-	protected BSFormDateInput buildDateTimePicker(Field field, DateTimePicker anno, BSFormGroup group)
+	protected BSFormDateInput buildDateTimePicker(Field field, DateTimePickerField anno, BSFormGroup group)
 	{
 		return null;
 	}
 	
-	protected BSFormDateInput buildDatePicker(Field field, DatePicker anno, BSFormGroup group)
+	protected BSFormDateInput buildDatePicker(Field field, DatePickerField anno, BSFormGroup group)
 	{
 		return null;
 	}
@@ -326,13 +333,6 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 		if (!anno.patternMessage().isEmpty())
 		{
 			group.setPatternMessage(anno.patternMessage());
-		}
-		
-		
-		if (field.isAnnotationPresent(ReadOnlyWebComponent.class))
-		{
-			input.addAttribute("readonly", null);
-			input.addAttribute("disabled", "");
 		}
 		
 		return input;
@@ -396,12 +396,6 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 		
 		setValue(field, input);
 		
-		if (field.isAnnotationPresent(ReadOnlyWebComponent.class))
-		{
-			input.addAttribute("readonly", null);
-			input.addAttribute("disabled", "");
-		}
-		
 		return input;
 	}
 	
@@ -450,12 +444,7 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 		{
 			log.log(Level.WARNING, "Unable to set checked for field [" + field.getName() + "]");
 		}
-		
-		if (field.isAnnotationPresent(LabelField.class))
-		{
-			group.add(buildFieldLabel(field, field.getAnnotation(LabelField.class), group));
-		}
-		
+
 		group.setInputComponent(input);
 		
 		if (anno.required())
@@ -485,12 +474,6 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 		
 		setValue(field, input);
 		
-		if (field.isAnnotationPresent(ReadOnlyWebComponent.class))
-		{
-			input.addAttribute("readonly", null);
-			input.addAttribute("disabled", "");
-		}
-		
 		return input;
 	}
 	
@@ -508,6 +491,47 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 	{
 		return null;
 	}
+	
+	/**
+	 * Builds a pretty check box using the angular plugin
+	 * @param field
+	 * @param anno
+	 * @param group
+	 * @return
+	 */
+	protected PrettyCheckbox buildPrettyCheckbox(Field field, PrettyCheckboxField anno, BSFormGroup group)
+	{
+		PrettyCheckbox input = new PrettyCheckbox();
+		input.bind(getID() + "." + field.getName());
+		
+		input.setLabel(anno.label());
+		input.setValue(anno.value());
+		if(anno.disabled())
+		input.setDisabled(anno.disabled());
+		if(anno.labelLeft())
+			input.setLabelLeft(anno.labelLeft());
+		if(anno.multiple())
+			input.setMultiple(anno.multiple());
+		
+		group.setInputComponent(input);
+		group.setAngularValidation(true);
+		
+		group.setShowControlFeedback(anno.showControlFeedback());
+		
+		setValue(field, input);
+		
+		if (anno.required())
+		{
+			input.setRequired();
+		}
+		if (!anno.requiredMessage().isEmpty())
+		{
+			group.setRequiredMessage(anno.requiredMessage());
+		}
+		
+		return input;
+	}
+	
 	
 	protected BSFormTextAreaInput buildTextAreaField(Field field, TextAreaField anno, BSFormGroup group)
 	{
@@ -551,12 +575,6 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 			group.setPatternMessage(anno.patternMessage());
 		}
 		
-		if (field.isAnnotationPresent(ReadOnlyWebComponent.class))
-		{
-			input.addAttribute("readonly", null);
-			input.addAttribute("disabled", "");
-		}
-		
 		return input;
 	}
 	
@@ -593,12 +611,6 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 		}
 		
 		setValue(field, input);
-		if (field.isAnnotationPresent(ReadOnlyWebComponent.class))
-		{
-			input.addAttribute("readonly", null);
-			input.addAttribute("disabled", "");
-		}
-		
 		
 		return input;
 	}
@@ -636,12 +648,6 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 		}
 		
 		setValue(field, input);
-		if (field.isAnnotationPresent(ReadOnlyWebComponent.class))
-		{
-			input.addAttribute("readonly", null);
-			input.addAttribute("disabled", "");
-		}
-		
 		
 		return input;
 	}
