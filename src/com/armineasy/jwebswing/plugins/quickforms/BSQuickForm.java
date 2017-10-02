@@ -11,7 +11,6 @@ import lombok.Data;
 import lombok.extern.java.Log;
 import za.co.mmagon.jwebswing.base.ajax.AjaxResponse;
 import za.co.mmagon.jwebswing.base.html.Input;
-import za.co.mmagon.jwebswing.htmlbuilder.javascript.JavaScriptPart;
 import za.co.mmagon.jwebswing.plugins.angularprettycheckboxes.PrettyCheckbox;
 import za.co.mmagon.jwebswing.plugins.bootstrap.dropdown.BSDropDown;
 import za.co.mmagon.jwebswing.plugins.bootstrap.forms.BSForm;
@@ -40,7 +39,7 @@ import java.util.logging.Level;
  */
 @Log
 @Data
-public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
+public class BSQuickForm<E extends Object, J extends BSQuickForm<E, J>>
 		extends BSForm<J>
 {
 	
@@ -58,7 +57,7 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 	
 	private BSQuickForm()
 	{
-
+	
 	}
 	
 	/**
@@ -67,7 +66,20 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 	public BSQuickForm(E anything)
 	{
 		this.object = anything;
-		setID(anything.getClass().getCanonicalName().replace('.', '_'));
+		if (anything instanceof Class)
+		{
+			Class c = (Class) anything;
+			Object instance = GuiceContext.getInstance(c);
+			this.object = (E) instance;
+		}
+		if (anything instanceof Class)
+		{
+			setID(Class.class.cast(anything).getCanonicalName().replace('.', '_'));
+		}
+		else
+		{
+			setID(anything.getClass().getCanonicalName().replace('.', '_'));
+		}
 	}
 	
 	@Override
@@ -86,6 +98,17 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 	{
 		this.object = object;
 		setID(object.getClass().getCanonicalName().replace('.', '_'));
+		if (object instanceof Class)
+		{
+			Class c = (Class) object;
+			Object instance = GuiceContext.getInstance(c);
+			this.object = (E) instance;
+		}
+	}
+	
+	public String getDtoName()
+	{
+	return null;
 	}
 	
 	protected BSForm buildForm()
@@ -411,6 +434,7 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 	
 	protected BSFormFileInput buildFileUploadField(Field field, BSFormGroup group)
 	{
+
 		return null;
 	}
 	
@@ -444,7 +468,7 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 		{
 			log.log(Level.WARNING, "Unable to set checked for field [" + field.getName() + "]");
 		}
-
+		
 		group.setInputComponent(input);
 		
 		if (anno.required())
@@ -494,9 +518,11 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 	
 	/**
 	 * Builds a pretty check box using the angular plugin
+	 *
 	 * @param field
 	 * @param anno
 	 * @param group
+	 *
 	 * @return
 	 */
 	protected PrettyCheckbox buildPrettyCheckbox(Field field, PrettyCheckboxField anno, BSFormGroup group)
@@ -506,27 +532,29 @@ public class BSQuickForm<E extends JavaScriptPart, J extends BSQuickForm<E, J>>
 		
 		input.setLabel(anno.label());
 		input.setValue(anno.value());
-		if(anno.disabled())
-		input.setDisabled(anno.disabled());
-		if(anno.labelLeft())
+		if (anno.disabled())
+		{
+			input.setDisabled(anno.disabled());
+		}
+		if (anno.labelLeft())
+		{
 			input.setLabelLeft(anno.labelLeft());
-		if(anno.multiple())
+		}
+		if (anno.multiple())
+		{
 			input.setMultiple(anno.multiple());
+		}
 		
 		group.setInputComponent(input);
-		group.setAngularValidation(true);
+		//group.setAngularValidation(true);
 		
-		group.setShowControlFeedback(anno.showControlFeedback());
+		//group.setShowControlFeedback(anno.showControlFeedback());
 		
 		setValue(field, input);
 		
 		if (anno.required())
 		{
 			input.setRequired();
-		}
-		if (!anno.requiredMessage().isEmpty())
-		{
-			group.setRequiredMessage(anno.requiredMessage());
 		}
 		
 		return input;
