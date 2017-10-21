@@ -2,8 +2,12 @@ package com.armineasy.jwebswing.plugins.quickforms;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import za.co.mmagon.BaseTestClass;
+import za.co.mmagon.jwebswing.BaseTestClass;
 import za.co.mmagon.jwebswing.htmlbuilder.javascript.JavaScriptPart;
+import za.co.mmagon.jwebswing.plugins.bootstrap.forms.groups.BSFormGroup;
+import za.co.mmagon.jwebswing.plugins.quickforms.events.QuickFormsCancelEvent;
+import za.co.mmagon.jwebswing.plugins.quickforms.events.QuickFormsClearEvent;
+import za.co.mmagon.jwebswing.plugins.quickforms.events.QuickFormsSubmitEvent;
 
 public class BSQuickFormTest extends BaseTestClass
 {
@@ -12,7 +16,7 @@ public class BSQuickFormTest extends BaseTestClass
 	@BeforeEach
 	public void setUp()
 	{
-		form = new BSQuickForm(new Dto());
+		form = new BSQuickFormImpl(new Dto());
 	}
 	
 	@Test
@@ -148,6 +152,38 @@ public class BSQuickFormTest extends BaseTestClass
 		public void setTextArea(String textArea)
 		{
 			this.textArea = textArea;
+		}
+	}
+
+	class BSQuickFormImpl<G extends BSFormGroup<G>, J extends BSQuickFormImpl<G, J>> extends BSQuickForm<Dto, G, J>
+	{
+
+		/**
+		 * Constructs a new BSQuickForm
+		 *
+		 * @param anything
+		 */
+		public BSQuickFormImpl(Dto anything)
+		{
+			super(anything);
+		}
+
+		@Override
+		protected Class<? extends QuickFormsSubmitEvent> onSubmit()
+		{
+			return null;
+		}
+
+		@Override
+		protected Class<? extends QuickFormsCancelEvent> onCancel()
+		{
+			return null;
+		}
+
+		@Override
+		protected Class<? extends QuickFormsClearEvent> onClear()
+		{
+			return null;
 		}
 	}
 }
