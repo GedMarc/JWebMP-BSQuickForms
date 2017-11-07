@@ -13,6 +13,7 @@ import za.co.mmagon.jwebswing.plugins.quickforms.IQuickForm;
 import za.co.mmagon.jwebswing.plugins.quickforms.QuickFormFieldGroup;
 import za.co.mmagon.jwebswing.plugins.quickforms.QuickForms;
 import za.co.mmagon.jwebswing.plugins.quickforms.annotations.*;
+import za.co.mmagon.jwebswing.utilities.StaticStrings;
 import za.co.mmagon.logger.LogFactory;
 
 import java.io.Serializable;
@@ -62,7 +63,7 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 	{
 		
 		BSFormTextInput input = new BSFormTextInput();
-		input.bind(getID() + "." + field.getName());
+		input.bind(getID() + StaticStrings.STRING_DOT + field.getName());
 		if (anno.minLength() != Integer.MIN_VALUE)
 		{
 			input.setMinimumLength(anno.minLength());
@@ -125,7 +126,7 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildEmailField(Field field, EmailField anno, QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> fieldGroup)
 	{
 		BSFormEmailInput input = new BSFormEmailInput();
-		input.bind(getID() + "." + field.getName());
+		input.bind(getID() + StaticStrings.STRING_DOT + field.getName());
 
 		fieldGroup.getGroup().setInputComponent(input);
 		fieldGroup.getGroup().setAngularValidation(true);
@@ -183,7 +184,7 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildPasswordField(Field field, PasswordField anno, QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> fieldGroup)
 	{
 		BSFormPasswordInput input = new BSFormPasswordInput();
-		input.bind(getID() + "." + field.getName());
+		input.bind(getID() + StaticStrings.STRING_DOT + field.getName());
 		if (anno.minLength() != Integer.MIN_VALUE)
 		{
 			input.setMinimumLength(anno.minLength());
@@ -253,7 +254,7 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildSwitchField(Field field, SwitchField anno, QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> fieldGroup)
 	{
 		BootstrapSwitchCheckBox input = new BootstrapSwitchCheckBox();
-		input.bind(getID() + "." + field.getName());
+		input.bind(getID() + StaticStrings.STRING_DOT + field.getName());
 		if (anno.required())
 		{
 			input.setRequired();
@@ -325,7 +326,7 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildTextAreaField(Field field, TextAreaField anno, QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> fieldGroup)
 	{
 		BSFormTextAreaInput input = new BSFormTextAreaInput();
-		input.bind(getID() + "." + field.getName());
+		input.bind(getID() + StaticStrings.STRING_DOT + field.getName());
 		if (anno.minLength() != Integer.MIN_VALUE)
 		{
 			input.setMinimumLength(anno.minLength());
@@ -371,7 +372,7 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildNumberField(Field field, NumberField anno, QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> fieldGroup)
 	{
 		BSFormNumberInput input = new BSFormNumberInput();
-		input.bind(getID() + "." + field.getName());
+		input.bind(getID() + StaticStrings.STRING_DOT + field.getName());
 		
 		if (anno.maximumValue() != Integer.MIN_VALUE)
 		{
@@ -409,7 +410,7 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildNumberSpinnerField(Field field, NumberSpinnerField anno, QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> fieldGroup)
 	{
 		BSFormNumberInput input = new BSFormNumberInput();
-		input.bind(getID() + "." + field.getName());
+		input.bind(getID() + StaticStrings.STRING_DOT + field.getName());
 		
 		if (anno.maximumValue() != Integer.MIN_VALUE)
 		{
