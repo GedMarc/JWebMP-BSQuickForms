@@ -51,6 +51,7 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	protected G buildFieldGroup()
 	{
 		BSFormGroup fieldGroup = new BSFormGroup<>();
