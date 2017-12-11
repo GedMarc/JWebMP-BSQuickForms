@@ -1,7 +1,7 @@
 package com.armineasy.jwebswing.plugins.quickforms.annotations.actions;
 
-import za.co.mmagon.jwebswing.plugins.bootstrap.componentoptions.BSComponentOffsetOptions;
-import za.co.mmagon.jwebswing.plugins.bootstrap.componentoptions.BSComponentWidthOptions;
+import za.co.mmagon.jwebswing.plugins.bootstrap.componentoptions.BSOffsetOptions;
+import za.co.mmagon.jwebswing.plugins.bootstrap.componentoptions.BSWidthOptions;
 
 import java.lang.annotation.*;
 
@@ -13,23 +13,23 @@ import java.lang.annotation.*;
 @Inherited
 public @interface SubmitButtonField
 {
-	public BSComponentWidthOptions[] sizes() default
+	BSWidthOptions[] sizes() default
 			{
-					BSComponentWidthOptions.col_xs_12, BSComponentWidthOptions.col_md_4, BSComponentWidthOptions.col_lg_3
+					BSWidthOptions.col_xs_12, BSWidthOptions.col_md_4, BSWidthOptions.col_lg_3
 			};
-	
-	public BSComponentOffsetOptions[] offsets() default
+
+	BSOffsetOptions[] offsets() default
 			{
-					BSComponentOffsetOptions.col_md_offset_2
+					BSOffsetOptions.col_md_offset_2
 			};
-	
-	
-	public String style() default "";
 
-	public String classes() default "";
-	
-	public String label() default "";
 
-	public String iconClass() default "";
-	
+	String style() default "";
+
+	String classes() default "";
+
+	String label() default "";
+
+	String iconClass() default "";
+
 }
