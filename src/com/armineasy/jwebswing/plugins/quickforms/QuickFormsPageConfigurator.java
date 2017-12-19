@@ -16,9 +16,9 @@ import za.co.mmagon.jwebswing.plugins.bootstrap.BootstrapPageConfigurator;
  */
 public class QuickFormsPageConfigurator extends PageConfigurator
 {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	/*
 	* Constructs a new QuickFormsPageConfigurator
 	 */
@@ -26,13 +26,12 @@ public class QuickFormsPageConfigurator extends PageConfigurator
 	{
 		//Nothing needed
 	}
-	
+
 	@Override
 	public Page configure(Page page)
 	{
 		if (!page.isConfigured())
 		{
-			BootstrapPageConfigurator.setBootstrap4(true);
 			BootstrapPageConfigurator.setRequired(page.getBody(), true);
 			AngularPageConfigurator.setRequired(page.getBody(), true);
 		}
