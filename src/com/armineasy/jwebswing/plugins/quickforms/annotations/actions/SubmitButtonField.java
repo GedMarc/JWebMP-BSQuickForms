@@ -1,7 +1,7 @@
 package com.armineasy.jwebswing.plugins.quickforms.annotations.actions;
 
-import za.co.mmagon.jwebswing.plugins.bootstrap.componentoptions.BSOffsetOptions;
-import za.co.mmagon.jwebswing.plugins.bootstrap.componentoptions.BSWidthOptions;
+import za.co.mmagon.jwebswing.plugins.bootstrap.options.BSOffsetOptions;
+import za.co.mmagon.jwebswing.plugins.bootstrap.options.BSWidthOptions;
 
 import java.lang.annotation.*;
 
