@@ -33,7 +33,7 @@ public class QuickFormsPageConfigurator extends PageConfigurator
 		if (!page.isConfigured())
 		{
 			BootstrapPageConfigurator.setRequired(page.getBody(), true);
-			AngularPageConfigurator.setRequired(page.getBody(), true);
+			AngularPageConfigurator.setRequired(true);
 		}
 		return page;
 	}
