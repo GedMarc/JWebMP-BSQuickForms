@@ -8,7 +8,6 @@ package com.armineasy.jwebswing.plugins.quickforms;
 import za.co.mmagon.jwebswing.Page;
 import za.co.mmagon.jwebswing.PageConfigurator;
 import za.co.mmagon.jwebswing.base.angular.AngularPageConfigurator;
-import za.co.mmagon.jwebswing.plugins.bootstrap.BootstrapPageConfigurator;
 
 /**
  * @author Marc Magon
@@ -32,7 +31,6 @@ public class QuickFormsPageConfigurator extends PageConfigurator
 	{
 		if (!page.isConfigured())
 		{
-			BootstrapPageConfigurator.setRequired(page.getBody(), true);
 			AngularPageConfigurator.setRequired(true);
 		}
 		return page;
