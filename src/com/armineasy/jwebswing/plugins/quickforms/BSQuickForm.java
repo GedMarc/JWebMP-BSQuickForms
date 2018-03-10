@@ -22,16 +22,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @param <E> Entity class type if wanted
+ * @param <E>
+ * 		Entity class type if wanted
  * @param <J>
  *
  * @author Marc Magon
  * @since 25 Mar 2017
  */
 public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<G>, J extends BSQuickForm<E, G, J>>
-		extends QuickForms<E, G, J> implements IQuickForm<E, G, J>
+		extends QuickForms<E, G, J>
+		implements IQuickForm<E, G, J>
 {
-	
+
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = LogFactory.getLog("BSQuickForms");
 
@@ -43,11 +45,11 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 		super(anything);
 		setSerializable(anything);
 	}
-	
-	
+
+
 	public String getDtoName()
 	{
-	return null;
+		return null;
 	}
 
 	@Override
@@ -55,14 +57,14 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 	protected G buildFieldGroup()
 	{
 		BSFormGroup fieldGroup = new BSFormGroup<>();
-		fieldGroup.setInline(isInline());
+		fieldGroup.setInline(false);
 		return (G) fieldGroup;
 	}
 
 	@Override
 	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildTextField(Field field, TextField anno, QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> fieldGroup)
 	{
-		
+
 		BSFormTextInput input = new BSFormTextInput();
 		input.bind(getID() + StaticStrings.STRING_DOT + field.getName());
 		if (anno.minLength() != Integer.MIN_VALUE)
@@ -73,37 +75,47 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 		{
 			input.setMaximumLength(anno.maxLength());
 		}
-		
+
 		input.setPlaceholder(anno.placeholder());
 
-		fieldGroup.getGroup().setInputComponent(input);
-		fieldGroup.getGroup().setAngularValidation(true);
-		fieldGroup.getGroup().setShowControlFeedback(anno.showControlFeedback());
-		
+		fieldGroup.getGroup()
+		          .setInputComponent(input);
+		fieldGroup.getGroup()
+		          .setAngularValidation(true);
+		fieldGroup.getGroup()
+		          .setShowControlFeedback(anno.showControlFeedback());
+
 		setValue(field, input);
-		
+
 		if (anno.required())
 		{
 			input.setRequired();
 		}
-		if (!anno.requiredMessage().isEmpty())
+		if (!anno.requiredMessage()
+		         .isEmpty())
 		{
-			fieldGroup.getGroup().setRequiredMessage(anno.requiredMessage());
+			fieldGroup.getGroup()
+			          .setRequiredMessage(anno.requiredMessage());
 		}
-		if (!anno.patternMessage().isEmpty())
+		if (!anno.patternMessage()
+		         .isEmpty())
 		{
-			fieldGroup.getGroup().setPatternMessage(anno.patternMessage());
+			fieldGroup.getGroup()
+			          .setPatternMessage(anno.patternMessage());
 		}
-		
-		if (!anno.style().isEmpty())
+
+		if (!anno.style()
+		         .isEmpty())
 		{
 			input.addStyle(anno.style());
 		}
-		if (!anno.regex().isEmpty())
+		if (!anno.regex()
+		         .isEmpty())
 		{
 			input.setPattern(anno.regex(), true);
 		}
-		if (!anno.regexBind().isEmpty())
+		if (!anno.regexBind()
+		         .isEmpty())
 		{
 			input.setPattern(anno.regexBind());
 		}
@@ -112,7 +124,9 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 	}
 
 	@Override
-	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildDateTimePicker(Field field, DateTimePickerField anno, QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> fieldGroup)
+	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildDateTimePicker(Field field, DateTimePickerField anno,
+	                                                                                 QuickFormFieldGroup<G, ? extends QuickFormFieldGroup>
+			                                                                                 fieldGroup)
 	{
 		return null;
 	}
@@ -129,13 +143,17 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 		BSFormEmailInput input = new BSFormEmailInput();
 		input.bind(getID() + StaticStrings.STRING_DOT + field.getName());
 
-		fieldGroup.getGroup().setInputComponent(input);
-		fieldGroup.getGroup().setAngularValidation(true);
-		fieldGroup.getGroup().setShowControlFeedback(true);
-		
+		fieldGroup.getGroup()
+		          .setInputComponent(input);
+		fieldGroup.getGroup()
+		          .setAngularValidation(true);
+		fieldGroup.getGroup()
+		          .setShowControlFeedback(true);
+
 		setValue(field, input);
-		
-		if (!anno.placeholder().isEmpty())
+
+		if (!anno.placeholder()
+		         .isEmpty())
 		{
 			input.setPlaceholder(anno.placeholder());
 		}
@@ -143,20 +161,26 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 		{
 			input.setRequired();
 		}
-		if (!anno.requiredMessage().isEmpty())
+		if (!anno.requiredMessage()
+		         .isEmpty())
 		{
-			fieldGroup.getGroup().setRequiredMessage(anno.requiredMessage());
+			fieldGroup.getGroup()
+			          .setRequiredMessage(anno.requiredMessage());
 		}
-		if (!anno.patternMessage().isEmpty())
+		if (!anno.patternMessage()
+		         .isEmpty())
 		{
-			fieldGroup.getGroup().setPatternMessage(anno.patternMessage());
+			fieldGroup.getGroup()
+			          .setPatternMessage(anno.patternMessage());
 		}
 
 		return fieldGroup;
 	}
 
 	@Override
-	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildSubHeaderField(Field field, SubHeaderField anno, QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> fieldGroup)
+	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildSubHeaderField(Field field, SubHeaderField anno,
+	                                                                                 QuickFormFieldGroup<G, ? extends QuickFormFieldGroup>
+			                                                                                 fieldGroup)
 	{
 		BSFormLabel label = new BSFormLabel();
 		label.setTag("H3");
@@ -182,46 +206,58 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 	}
 
 	@Override
-	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildPasswordField(Field field, PasswordField anno, QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> fieldGroup)
+	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildPasswordField(Field field, PasswordField anno,
+	                                                                                QuickFormFieldGroup<G, ? extends QuickFormFieldGroup>
+			                                                                                fieldGroup)
 	{
 		BSFormPasswordInput input = new BSFormPasswordInput();
 		input.bind(getID() + StaticStrings.STRING_DOT + field.getName());
 		if (anno.minLength() != Integer.MIN_VALUE)
 		{
 			input.setMinimumLength(anno.minLength());
-			fieldGroup.getGroup().setMinLengthMessage(anno.minLengthMessage());
+			fieldGroup.getGroup()
+			          .setMinLengthMessage(anno.minLengthMessage());
 		}
 		if (anno.maxLength() != Integer.MIN_VALUE)
 		{
 			input.setMaximumLength(anno.maxLength());
-			fieldGroup.getGroup().setMinLengthMessage(anno.maxLengthMessage());
+			fieldGroup.getGroup()
+			          .setMinLengthMessage(anno.maxLengthMessage());
 		}
 		input.setPlaceholder("Password");
 
-		fieldGroup.getGroup().setInputComponent(input);
-		fieldGroup.getGroup().setAngularValidation(true);
-		fieldGroup.getGroup().setShowControlFeedback(true);
-		
+		fieldGroup.getGroup()
+		          .setInputComponent(input);
+		fieldGroup.getGroup()
+		          .setAngularValidation(true);
+		fieldGroup.getGroup()
+		          .setShowControlFeedback(true);
+
 		if (anno.required())
 		{
 			input.setRequired();
 		}
-		if (!anno.requiredMessage().isEmpty())
+		if (!anno.requiredMessage()
+		         .isEmpty())
 		{
-			fieldGroup.getGroup().setRequiredMessage(anno.requiredMessage());
+			fieldGroup.getGroup()
+			          .setRequiredMessage(anno.requiredMessage());
 		}
-		if (!anno.patternMessage().isEmpty())
+		if (!anno.patternMessage()
+		         .isEmpty())
 		{
-			fieldGroup.getGroup().setPatternMessage(anno.patternMessage());
+			fieldGroup.getGroup()
+			          .setPatternMessage(anno.patternMessage());
 		}
-		
+
 		setValue(field, input);
 
 		return fieldGroup;
 	}
 
 	@Override
-	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildColourField(Field field, QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> fieldGroup)
+	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildColourField(Field field, QuickFormFieldGroup<G, ? extends
+			                                                                                                                      QuickFormFieldGroup> fieldGroup)
 	{
 		return null;
 	}
@@ -233,20 +269,23 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 	}
 
 	@Override
-	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildFileUploadField(Field field, QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> fieldGroup)
+	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildFileUploadField(Field field, QuickFormFieldGroup<G, ? extends
+			                                                                                                                          QuickFormFieldGroup> fieldGroup)
 	{
 
 		return null;
 	}
 
 	@Override
-	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildRadioField(Field field, QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> fieldGroup)
+	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildRadioField(Field field, QuickFormFieldGroup<G, ? extends
+			                                                                                                                     QuickFormFieldGroup> fieldGroup)
 	{
 		return null;
 	}
 
 	@Override
-	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildSearchField(Field field, QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> fieldGroup)
+	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildSearchField(Field field, QuickFormFieldGroup<G, ? extends
+			                                                                                                                      QuickFormFieldGroup> fieldGroup)
 	{
 		return null;
 	}
@@ -273,40 +312,54 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 			log.log(Level.WARNING, "Unable to set checked for field [" + field.getName() + "]", e);
 		}
 
-		fieldGroup.getGroup().setInputComponent(input);
-		
+		fieldGroup.getGroup()
+		          .setInputComponent(input);
+
 		if (anno.required())
 		{
 			input.setRequired();
-			fieldGroup.getGroup().setRequiredMessage(anno.requiredMessage());
+			fieldGroup.getGroup()
+			          .setRequiredMessage(anno.requiredMessage());
 		}
-		if (!anno.onText().isEmpty())
+		if (!anno.onText()
+		         .isEmpty())
 		{
-			input.getOptions().setOnText(anno.onText());
+			input.getOptions()
+			     .setOnText(anno.onText());
 		}
-		if (!anno.offText().isEmpty())
+		if (!anno.offText()
+		         .isEmpty())
 		{
-			input.getOptions().setOffText(anno.offText());
+			input.getOptions()
+			     .setOffText(anno.offText());
 		}
-		if (!anno.requiredMessage().isEmpty())
+		if (!anno.requiredMessage()
+		         .isEmpty())
 		{
-			fieldGroup.getGroup().setRequiredMessage(anno.requiredMessage());
+			fieldGroup.getGroup()
+			          .setRequiredMessage(anno.requiredMessage());
 		}
-		if (!anno.patternMessage().isEmpty())
+		if (!anno.patternMessage()
+		         .isEmpty())
 		{
-			fieldGroup.getGroup().setPatternMessage(anno.patternMessage());
+			fieldGroup.getGroup()
+			          .setPatternMessage(anno.patternMessage());
 		}
 
-		fieldGroup.getGroup().setAngularValidation(true);
-		fieldGroup.getGroup().setShowControlFeedback(anno.showControlFeedback());
-		
+		fieldGroup.getGroup()
+		          .setAngularValidation(true);
+		fieldGroup.getGroup()
+		          .setShowControlFeedback(anno.showControlFeedback());
+
 		setValue(field, input);
 
 		return fieldGroup;
 	}
 
 	@Override
-	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildSelectDropDownField(Field field, SelectField anno, QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> fieldGroup)
+	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildSelectDropDownField(Field field, SelectField anno,
+	                                                                                      QuickFormFieldGroup<G, ? extends
+			                                                                                                             QuickFormFieldGroup> fieldGroup)
 	{
 		return null;
 	}
@@ -318,52 +371,65 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 	}
 
 	@Override
-	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildTelephoneField(Field field, TelephoneField anno, QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> fieldGroup)
+	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildTelephoneField(Field field, TelephoneField anno,
+	                                                                                 QuickFormFieldGroup<G, ? extends QuickFormFieldGroup>
+			                                                                                 fieldGroup)
 	{
 		return null;
 	}
 
 	@Override
-	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildTextAreaField(Field field, TextAreaField anno, QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> fieldGroup)
+	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildTextAreaField(Field field, TextAreaField anno,
+	                                                                                QuickFormFieldGroup<G, ? extends QuickFormFieldGroup>
+			                                                                                fieldGroup)
 	{
 		BSFormTextAreaInput input = new BSFormTextAreaInput();
 		input.bind(getID() + StaticStrings.STRING_DOT + field.getName());
 		if (anno.minLength() != Integer.MIN_VALUE)
 		{
 			input.setMinimumLength(anno.minLength());
-			fieldGroup.getGroup().setMinLengthMessage(anno.minLengthMessage());
+			fieldGroup.getGroup()
+			          .setMinLengthMessage(anno.minLengthMessage());
 		}
 
 		if (anno.maxLength() != Integer.MIN_VALUE)
 		{
 			input.setMaximumLength(anno.maxLength());
-			fieldGroup.getGroup().setMaxLengthMessage(anno.maxLengthMessage());
+			fieldGroup.getGroup()
+			          .setMaxLengthMessage(anno.maxLengthMessage());
 		}
-		
+
 		if (anno.required())
 		{
 			input.setRequired();
 		}
-		
+
 		input.setPlaceholder(anno.placeholder());
 
-		fieldGroup.getGroup().setInputComponent(input);
-		fieldGroup.getGroup().setAngularValidation(true);
-		fieldGroup.getGroup().setShowControlFeedback(anno.showControlFeedback());
-		
+		fieldGroup.getGroup()
+		          .setInputComponent(input);
+		fieldGroup.getGroup()
+		          .setAngularValidation(true);
+		fieldGroup.getGroup()
+		          .setShowControlFeedback(anno.showControlFeedback());
+
 		setValue(field, input);
-		
+
 		if (anno.required())
 		{
 			input.setRequired();
 		}
-		if (!anno.requiredMessage().isEmpty())
+		if (!anno.requiredMessage()
+		         .isEmpty())
 		{
-			fieldGroup.getGroup().setRequiredMessage(anno.requiredMessage());
+			fieldGroup.getGroup()
+			          .setRequiredMessage(anno.requiredMessage());
 		}
-		if (!anno.patternMessage().isEmpty())
+		if (!anno.patternMessage()
+		         .isEmpty())
 		{
-			fieldGroup.getGroup().setPatternMessage(anno.patternMessage());
+			fieldGroup.getGroup()
+			          .setPatternMessage(anno.patternMessage());
 		}
 
 		return fieldGroup;
@@ -374,7 +440,7 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 	{
 		BSFormNumberInput input = new BSFormNumberInput();
 		input.bind(getID() + StaticStrings.STRING_DOT + field.getName());
-		
+
 		if (anno.maximumValue() != Integer.MIN_VALUE)
 		{
 			input.setMaximumLength(anno.maximumValue());
@@ -384,35 +450,44 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 			input.setMinimumLength(anno.minimumValue());
 		}
 
-		fieldGroup.getGroup().setInputComponent(input);
-		fieldGroup.getGroup().setAngularValidation(true);
-		fieldGroup.getGroup().setShowControlFeedback(anno.showControlFeedback());
-		
+		fieldGroup.getGroup()
+		          .setInputComponent(input);
+		fieldGroup.getGroup()
+		          .setAngularValidation(true);
+		fieldGroup.getGroup()
+		          .setShowControlFeedback(anno.showControlFeedback());
+
 		if (anno.required())
 		{
 			input.setRequired();
 		}
-		
-		if (!anno.requiredMessage().isEmpty())
+
+		if (!anno.requiredMessage()
+		         .isEmpty())
 		{
-			fieldGroup.getGroup().setRequiredMessage(anno.requiredMessage());
+			fieldGroup.getGroup()
+			          .setRequiredMessage(anno.requiredMessage());
 		}
-		if (!anno.patternMessage().isEmpty())
+		if (!anno.patternMessage()
+		         .isEmpty())
 		{
-			fieldGroup.getGroup().setPatternMessage(anno.patternMessage());
+			fieldGroup.getGroup()
+			          .setPatternMessage(anno.patternMessage());
 		}
-		
+
 		setValue(field, input);
 
 		return fieldGroup;
 	}
 
 	@Override
-	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildNumberSpinnerField(Field field, NumberSpinnerField anno, QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> fieldGroup)
+	public QuickFormFieldGroup<G, ? extends QuickFormFieldGroup> buildNumberSpinnerField(Field field, NumberSpinnerField anno,
+	                                                                                     QuickFormFieldGroup<G, ? extends
+			                                                                                                            QuickFormFieldGroup> fieldGroup)
 	{
 		BSFormNumberInput input = new BSFormNumberInput();
 		input.bind(getID() + StaticStrings.STRING_DOT + field.getName());
-		
+
 		if (anno.maximumValue() != Integer.MIN_VALUE)
 		{
 			input.setMaximumLength(anno.maximumValue());
@@ -421,25 +496,32 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 		{
 			input.setMinimumLength(anno.minimumValue());
 		}
-		
+
 		if (anno.required())
 		{
 			input.setRequired();
 		}
 
-		fieldGroup.getGroup().setInputComponent(input);
-		fieldGroup.getGroup().setAngularValidation(true);
-		fieldGroup.getGroup().setShowControlFeedback(anno.showControlFeedback());
-		
-		if (!anno.requiredMessage().isEmpty())
+		fieldGroup.getGroup()
+		          .setInputComponent(input);
+		fieldGroup.getGroup()
+		          .setAngularValidation(true);
+		fieldGroup.getGroup()
+		          .setShowControlFeedback(anno.showControlFeedback());
+
+		if (!anno.requiredMessage()
+		         .isEmpty())
 		{
-			fieldGroup.getGroup().setRequiredMessage(anno.requiredMessage());
+			fieldGroup.getGroup()
+			          .setRequiredMessage(anno.requiredMessage());
 		}
-		if (!anno.patternMessage().isEmpty())
+		if (!anno.patternMessage()
+		         .isEmpty())
 		{
-			fieldGroup.getGroup().setPatternMessage(anno.patternMessage());
+			fieldGroup.getGroup()
+			          .setPatternMessage(anno.patternMessage());
 		}
-		
+
 		setValue(field, input);
 
 		return fieldGroup;
