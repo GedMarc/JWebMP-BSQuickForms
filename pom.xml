@@ -26,7 +26,6 @@
     </repositories>
 
 
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <src.dir>src</src.dir>
@@ -194,7 +193,7 @@
     </distributionManagement>
     <organization>
         <name>Marc Magon</name>
-        <url>http://jwebswing.com</url>
+        <url>http://jwebmp.com</url>
     </organization>
 
     <scm>
@@ -204,7 +203,7 @@
 
     <ciManagement>
         <system>TeamCity</system>
-        <url>http://jwebswing.com/teamcity</url>
+        <url>http://jwebmp.com/teamcity</url>
     </ciManagement>
     <reporting>
         <plugins>
