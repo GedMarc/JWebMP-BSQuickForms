@@ -5,9 +5,9 @@
  */
 package com.armineasy.jwebswing.plugins.quickforms;
 
-import za.co.mmagon.jwebswing.Page;
-import za.co.mmagon.jwebswing.PageConfigurator;
-import za.co.mmagon.jwebswing.base.angular.AngularPageConfigurator;
+import com.jwebmp.Page;
+import com.jwebmp.PageConfigurator;
+import com.jwebmp.base.angular.AngularPageConfigurator;
 
 /**
  * @author Marc Magon
