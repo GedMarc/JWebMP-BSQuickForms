@@ -2,8 +2,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>za.co.mmagon</groupId>
-    <artifactId>jwebswing-bootstrap-quick-forms</artifactId>
+    <groupId>com.jwebmp</groupId>
+    <artifactId>jwebmp-bootstrap-quick-forms</artifactId>
     <version>0.0.0_0</version>
     <packaging>jar</packaging>
 
@@ -141,40 +141,40 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jwebswing</artifactId>
+            <artifactId>jwebmp-core</artifactId>
             <version>${project.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jwebswing</artifactId>
+            <artifactId>jwebmp-core</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jwebswing-bootstrap</artifactId>
+            <artifactId>jwebmp-bootstrap</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jwebswing-bootstrap-switch</artifactId>
+            <artifactId>jwebmp-bootstrap-switch</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jwebswing-quickforms</artifactId>
+            <artifactId>jwebmp-quickforms</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jwebswing-angular-pretty-checkboxes</artifactId>
+            <artifactId>jwebmp-angular-pretty-checkboxes</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jwebswing-smart-wizard</artifactId>
+            <artifactId>jwebmp-smart-wizard</artifactId>
             <version>${project.version}</version>
         </dependency>
 
