@@ -20,7 +20,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.armineasy.jwebswing.plugins.quickforms;
+package com.jwebmp.plugins.bsquickforms;
 
 import com.jwebmp.logger.LogFactory;
 import com.jwebmp.plugins.bootstrap.forms.BSFormLabel;
@@ -62,7 +62,6 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 		super(anything);
 		setSerializable(anything);
 	}
-
 
 	public String getDtoName()
 	{

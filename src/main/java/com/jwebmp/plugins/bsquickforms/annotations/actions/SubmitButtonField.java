@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.armineasy.jwebswing.plugins.quickforms.annotations.actions;
+package com.jwebmp.plugins.bsquickforms.annotations.actions;
 
 import com.jwebmp.plugins.bootstrap.options.BSOffsetOptions;
 import com.jwebmp.plugins.bootstrap.options.BSWidthOptions;
@@ -30,7 +30,6 @@ public @interface SubmitButtonField
 	BSWidthOptions[] sizes() default {BSWidthOptions.col_xs_12, BSWidthOptions.col_md_4, BSWidthOptions.col_lg_3};
 
 	BSOffsetOptions[] offsets() default {BSOffsetOptions.col_md_offset_2};
-
 
 	String style() default "";
 
