@@ -42,42 +42,49 @@
             <version>${project.version}</version>
             <type>jar</type>
             <classifier>${jwebmp.runtime.classifier}</classifier>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jwebmp-bootstrap</artifactId>
             <version>${project.version}</version>
             <classifier>${jwebmp.runtime.classifier}</classifier>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jwebmp-bootstrap-switch</artifactId>
             <version>${project.version}</version>
             <classifier>${jwebmp.runtime.classifier}</classifier>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jwebmp-quickforms</artifactId>
             <version>${project.version}</version>
             <classifier>${jwebmp.runtime.classifier}</classifier>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jwebmp-angular-pretty-checkboxes</artifactId>
             <version>${project.version}</version>
             <classifier>${jwebmp.runtime.classifier}</classifier>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jwebmp-smart-wizard</artifactId>
             <version>${project.version}</version>
             <classifier>${jwebmp.runtime.classifier}</classifier>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jwebmp-log-master</artifactId>
             <version>${project.version}</version>
             <classifier>${jwebmp.runtime.classifier}</classifier>
+            <optional>true</optional>
         </dependency>
 
     </dependencies>
