@@ -22,6 +22,7 @@
  */
 package com.jwebmp.plugins.bsquickforms;
 
+import com.jwebmp.core.utilities.StaticStrings;
 import com.jwebmp.logger.LogFactory;
 import com.jwebmp.plugins.bootstrap.forms.BSFormLabel;
 import com.jwebmp.plugins.bootstrap.forms.controls.*;
@@ -31,7 +32,6 @@ import com.jwebmp.plugins.quickforms.IQuickForm;
 import com.jwebmp.plugins.quickforms.QuickFormFieldGroup;
 import com.jwebmp.plugins.quickforms.QuickForms;
 import com.jwebmp.plugins.quickforms.annotations.*;
-import com.jwebmp.utilities.StaticStrings;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
