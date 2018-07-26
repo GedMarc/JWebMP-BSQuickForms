@@ -3,6 +3,7 @@ import com.jwebmp.plugins.bsquickforms.QuickFormsPageConfigurator;
 
 module com.jwebmp.plugins.bsquickforms {
 	exports com.jwebmp.plugins.bsquickforms;
+	exports com.jwebmp.plugins.bsquickforms.annotations.actions;
 
 	requires com.jwebmp.core;
 	requires com.jwebmp.logmaster;
@@ -16,5 +17,6 @@ module com.jwebmp.plugins.bsquickforms {
 	requires com.jwebmp.plugins.quickforms;
 
 	provides IPageConfigurator with QuickFormsPageConfigurator;
-
+	opens com.jwebmp.plugins.bsquickforms to com.fasterxml.jackson.databind,com.jwebmp.core;
+	opens com.jwebmp.plugins.bsquickforms.annotations.actions to com.fasterxml.jackson.databind,com.jwebmp.core;
 }
