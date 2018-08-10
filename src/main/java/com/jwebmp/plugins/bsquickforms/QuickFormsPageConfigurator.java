@@ -9,6 +9,8 @@ import com.jwebmp.core.Page;
 import com.jwebmp.core.base.angular.AngularPageConfigurator;
 import com.jwebmp.core.services.IPageConfigurator;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author Marc Magon
  * @since 25 Mar 2017
@@ -27,6 +29,7 @@ public class QuickFormsPageConfigurator
 		//Nothing needed
 	}
 
+	@NotNull
 	@Override
 	public Page configure(Page page)
 	{
