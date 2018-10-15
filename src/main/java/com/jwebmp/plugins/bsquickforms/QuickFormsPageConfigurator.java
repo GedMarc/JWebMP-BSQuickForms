@@ -16,9 +16,8 @@ import javax.validation.constraints.NotNull;
  * @since 25 Mar 2017
  */
 public class QuickFormsPageConfigurator
-		implements IPageConfigurator
+		implements IPageConfigurator<QuickFormsPageConfigurator>
 {
-	private static final long serialVersionUID = 1L;
 	/**
 	 * If this configurator is enabled
 	 */
