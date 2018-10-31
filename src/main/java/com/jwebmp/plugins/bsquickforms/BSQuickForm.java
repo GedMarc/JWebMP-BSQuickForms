@@ -51,7 +51,7 @@ public abstract class BSQuickForm<E extends Serializable, G extends BSFormGroup<
 		implements IQuickForm<QuickFormFieldGroup<G, ? extends QuickFormFieldGroup>>
 {
 
-	private static final long serialVersionUID = 1L;
+
 	private static final Logger log = LogFactory.getLog("BSQuickForms");
 
 	/**
