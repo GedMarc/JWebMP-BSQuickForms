@@ -6,7 +6,6 @@
 package com.jwebmp.plugins.bsquickforms;
 
 import com.jwebmp.core.Page;
-import com.jwebmp.core.base.angular.AngularPageConfigurator;
 import com.jwebmp.core.services.IPageConfigurator;
 
 import javax.validation.constraints.NotNull;
@@ -60,10 +59,6 @@ public class QuickFormsPageConfigurator
 	@Override
 	public Page configure(Page page)
 	{
-		if (!page.isConfigured())
-		{
-			AngularPageConfigurator.setRequired(true);
-		}
 		return page;
 	}
 
