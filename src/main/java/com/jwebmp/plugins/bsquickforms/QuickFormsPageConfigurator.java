@@ -11,7 +11,7 @@ import com.jwebmp.core.services.IPageConfigurator;
 import javax.validation.constraints.NotNull;
 
 /**
- * @author Marc Magon
+ * @author GedMarc
  * @since 25 Mar 2017
  */
 public class QuickFormsPageConfigurator
